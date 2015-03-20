@@ -57,8 +57,36 @@ class Stylist
         $GLOBALS['DB']->exec("DELETE FROM stylist *;");
     }
 
+   static function find($search_id) {
+
+       $all_stylists= Stylist::getAll();
+       $found_stylist=null;
+
+       foreach( $all_stylists as $stylists){
+           $stylists_id= $stylists->getId();
+           if ($stylists_id ==$search_id){
+
+               $found_stylist=$stylists;
+
+           }
+
+        }
+       return $found_stylist;
+
+   }
+
+    function update($new_name){
+        $GLOBALS['DB']->exec("UPDATE stylist SET name '{$new_name}' WHERE id={$this->getId()}; ");
+        $this->setName($new_name);
+
+    }
 
 
+
+    function delete(){
+        $GLOBALS['DB']->exec("DELETE FROM stylist  WHERE id = {$this->getId()};");
+        $GLOBALS['DB']->exec("DELETE FROM  client WHERE stylist_id = {$this->getId()};");
+    }
 
 
 }
