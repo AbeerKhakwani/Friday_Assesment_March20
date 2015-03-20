@@ -18,11 +18,11 @@
          //Arrange
          $type = "Italian";
          $id = null;
-         $test_cuisine = new Stylist($type, $id);
+         $test_stylist = new Stylist($type, $id);
          //Act
-         $test_cuisine->save();
+         $test_stylist->save();
          $result = Stylist::getAll();
-         $this->assertEquals($test_cuisine, $result[0]);
+         $this->assertEquals($test_stylist, $result[0]);
      }
      function test_getAll()
      {
@@ -31,14 +31,14 @@
          $id = null;
          $name2 = "Home stuff";
          $id2 = null;
-         $test_Cuisine = new Stylist($name, $id);
-         $test_Cuisine->save();
-         $test_Cuisine2 = new Stylist($name2, $id2);
-         $test_Cuisine2->save();
+         $test_stylist = new Stylist($name, $id);
+         $test_stylist->save();
+         $test_stylist2 = new Stylist($name2, $id2);
+         $test_stylist2->save();
          //Act
          $result = Stylist::getAll();
          //Assert
-         $this->assertEquals([$test_Cuisine, $test_Cuisine2], $result);
+         $this->assertEquals([$test_stylist, $test_stylist2], $result);
      }
      function test_find()
     {
@@ -46,87 +46,87 @@
         $name = "american";
         $id = null;
 
-        $test_cuisine = new Stylist($name, $id);
-        $test_cuisine->save();
+        $test_stylist = new Stylist($name, $id);
+        $test_stylist->save();
 
         $name2 = "italian";
         $id2 = 2;
-        $test_cuisine2 = new Stylist($name2, $id2);
-        $test_cuisine2->save();
+        $test_stylist2 = new Stylist($name2, $id2);
+        $test_stylist2->save();
         //Act
-        $id_to_find=$test_cuisine2->getId();
+        $id_to_find=$test_stylist2->getId();
         $result = Stylist::find($id_to_find);
         //Assert
-        $this->assertEquals($test_cuisine2, $result);
+        $this->assertEquals($test_stylist2, $result);
     }
-    function testGetRestaurants(){
+    function testGetClients(){
       //Arrange
       $name = "Work stuff";
       $id = null;
-      $test_cuisine= new Stylist($name, $id);
-      $test_cuisine->save();
-      $cuisine_id=$test_cuisine->getId();
+      $test_stylist= new Stylist($name, $id);
+      $test_stylist->save();
+      $stylist_id=$test_stylist->getId();
 
 
 
       $name = "Email client";
       $address = "main street";
-      $test_restaurant = new Client( $name, $id, $cuisine_id);
-      $test_restaurant->save();
+      $test_client = new Client( $name, $id, $stylist_id);
+      $test_client->save();
 
 
       $name2 = "Meet with boss";
       $address2 = "main stress";
-      $test_restaurant2 = new Client($name2, $id ,$cuisine_id);
-      $test_restaurant2->save();
+      $test_client2 = new Client($name2, $id ,$stylist_id);
+      $test_client2->save();
       //Act
-      $result = $test_cuisine->getClients();
+      $result = $test_stylist->getClients();
       //Assert
-      $this->assertEquals([$test_restaurant, $test_restaurant2], $result);
+      $this->assertEquals([$test_client, $test_client2], $result);
   }
   function testUpdate()
  {
      //Arrange
      $type = "Work stuff";
      $id = 1;
-     $test_cuisine = new Stylist($type, $id);
-     $test_cuisine->save();
+     $test_stylist = new Stylist($type, $id);
+     $test_stylist->save();
      $new_type = "Home stuff";
      //Act
-     $test_cuisine->update($new_type);
+     $test_stylist->update($new_type);
      //Assert
-     $this->assertEquals("Home stuff", $test_cuisine->getName());
+     $this->assertEquals("Home stuff", $test_stylist->getName());
  }
  function testDelete()
    {
        //Arrange
        $type = "Work stuff";
        $id = 1;
-       $test_cuisine = new Stylist($type, $id);
-       $test_cuisine->save();
+       $test_stylist = new Stylist($type, $id);
+       $test_stylist->save();
        $type2 = "Work stuff";
        $id2 = 1;
-       $test_cuisine2 = new Stylist($type2, $id2);
-       $test_cuisine2->save();
+       $test_stylist2 = new Stylist($type2, $id2);
+       $test_stylist2->save();
        //Act
-       $test_cuisine->delete();
+       $test_stylist->delete();
        //Assert
-       $this->assertEquals([$test_cuisine2], Stylist::getAll());
+       $this->assertEquals([$test_stylist2], Stylist::getAll());
    }
  function testDeleteClient()
   {
       //Arrange
       $type = "American";
       $id = null;
-      $test_cuisine = new Stylist($type, $id);
-      $test_cuisine->save();
+      $test_stylist = new Stylist($type, $id);
+      $test_stylist->save();
 
       $name = "Micky";
-     $cuisine_id = $test_cuisine->getId();
-      $test_Restaurant = new Client($id, $name,$cuisine_id);
+     $stylist_id = $test_stylist->getId();
+      $test_Restaurant = new Client($id, $name,$stylist_id);
       $test_Restaurant->save();
       //Act
-      $test_cuisine->delete();
+      $test_stylist->delete();
       //Assert
       $this->assertEquals([], Client::getAll());
   }
