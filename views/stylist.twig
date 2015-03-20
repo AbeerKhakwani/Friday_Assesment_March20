@@ -23,22 +23,27 @@
     </head>
     <body>
 <div class="container">
-<h1>Here All Our Stylists</h1>
+
+
+<h1>{{ stylist.getName }}</h1>
+
+
 <div id="left">
-            <form action="/" method = "post">
-                <label for="name"> Stylist: </label>
+            <form action="/stylist/{{ stylist.getId() }}" method = "post">
+                <label for="name">Add Client </label>
                 <input id="name" name="name" type="text"></input>
+                <input id="stylist" name="stylist" type="hidden" value="{{ stylist.getId() }}">
                 <button type="Submit">Add stylist</button>
             </form>
 
         </div>
 
            <div id="right">
+           {% for client in clients %}
+           {{ client.getName }}
+           
 
-           {% for stylist in stylists   %}
-           <a href="/stylist/{{ stylist.getId }}">{{ stylist.getName }}</a>
            {% endfor %}
-
            </div>
 
 </div>
