@@ -2,14 +2,12 @@
 class Client
 {
     private $id;
-    private $client;
-
+    private $name;
     private $stylist_id;
-    function __construct( $client, $id = null, $stylist_id)
+    function __construct( $name,$id=null, $stylist_id)
     {
         $this->id         = $id;
-        $this->client       = $client;
-
+        $this->name       = $name;
         $this->stylist_id = $stylist_id;
     }
     function getId()
@@ -20,57 +18,74 @@ class Client
     {
         $this->id = (int) $new_id;
     }
-    function getClient()
+    function getName()
     {
-        return $this->client;
+        return $this->name;
     }
-    function setClient($new_client)
+    function setName($new_name)
     {
-        $this->client = (string) $new_client;
+        $this->name = (string) $new_name;
     }
 
-    function setStylistId($new_cuisineId)
+    function setstylist_id($new_stylist_id)
     {
-        $this->cuisine_Id = (int) $new_cuisineId;
+        $this->stylist_id = (int) $new_stylist_id;
     }
-    function getStylistId()
+    function getstylist_id()
     {
         return $this->stylist_id;
     }
-
     function save()
     {
-        $statement = $GLOBALS['DB']->query("INSERT INTO client (client, stylist_id) VALUES ('{$this->getClient()}', {$this->getStylistId()}) RETURNING id;");
-        $result    = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->setId($result['id']);
-    }
+        $statement = $GLOBALS['DB']->query("INSERT INTO client (name, stylist_id) VALUES ('{$this->getName()}', {$this->getstylist_id()}) RETURNING id;");
 
+        $result= $statement->fetch(PDO::FETCH_ASSOC);
+
+
+        $blanc=$this->setId($result['id']);
+
+
+    }
     static function getAll()
     {
-        $result_Clients = $GLOBALS['DB']->query("SELECT * FROM client;");
-        $Clients  = array();
-        foreach ($result_Clients as $Client) {
-            $id         = $Client['id'];
-            $client     = $Client['client'];
-            $Stylist_id = $Client['stylist_id'];
-            $new_Clients   = new Client( $client,$id, $Stylist_id);
-            array_push($Clients, $new_Clients);
+        $result_client = $GLOBALS['DB']->query("SELECT * FROM client;");
+        $clients      = array();
+        foreach ($result_client as $client) {
+            $id         = $client['id'];
+            $name       = $client['name'];
+            $stylist_id = $client['stylist_id'];
+            $new_client   = new Client( $name,$id, $stylist_id);
+            array_push($clients, $new_client);
         }
-        return $Clients;
-        
+        return $clients;
+    }
+    static function deleteAll()
+    {
+        $GLOBALS['DB']->exec("DELETE FROM client *;");
     }
 
 
-    static function deleteAll()
-     {
-         $GLOBALS['DB']->exec("DELETE FROM client *;");
-     }
+    static function find($id_search)
+    {
+        $found_id = null;
+        $ids      =Client::getAll();
+        foreach ($ids as $id) {
+            $rest_id = $id->getId();
+            if ($rest_id == $id_search) {
+                $found_id = $id;
+            }
+        }
+        return $found_id;
+    }
 
+    function update($new_name)
+    {
+        $GLOBALS['DB']->exec("UPDATE client SET name = '{$new_name}' WHERE id = {$this->getId()};");
+        $this->setName($new_name);
+    }
+    function delete(){
+        $GLOBALS['DB']->exec("DELETE FROM client Where id={$this->getId()};");
 
-
-
-
+    }
 }
-
-
 ?>
