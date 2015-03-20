@@ -8,7 +8,11 @@
     $DB = new PDO('pgsql:host=localhost;dbname=hair_salon_test');
     class StylistTest extends PHPUnit_Framework_TestCase
     {
+        protected function tearDown()
+        {
+            Stylist::deleteAll();
 
+        }
         function test_getName()
         {
             //Arrange
@@ -56,5 +60,29 @@
              $result = $test_Stylist->getId();
              $this->assertEquals(1, $result);
          }
+
+         function test_save(){
+            //Arrange
+            $name = "yyo";
+            $id = null;
+            $test_Stylist = new Stylist($name,$id);
+            //Act
+            $test_Stylist ->save();
+
+            $result = Stylist::getAll();
+            $this->assertEquals($test_Stylist, $result[0]);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 ?>
