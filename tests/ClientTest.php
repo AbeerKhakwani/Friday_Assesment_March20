@@ -20,9 +20,8 @@
             //Arrange
             $client= "Lynda";
             $id = null;
-            $phone=898998;
             $stylist_id=8;
-            $test_Client = new Client($client,$id,$phone,$stylist_id);
+            $test_Client = new Client($client,$id,$stylist_id);
             //Act
             $result = $test_Client->getClient();
             //Assert
@@ -34,9 +33,8 @@
              //Arrange
              $client= "Lynda";
              $id = null;
-             $phone=898998;
              $stylist_id=8;
-             $test_Client = new Client($client,$id,$phone,$stylist_id);
+             $test_Client = new Client($client,$id,$stylist_id);
 
              $test_Client->setClient("Julie");
              //Assert
@@ -48,9 +46,8 @@
              //Arrange
              $client= "Lynda";
              $id = 2;
-             $phone=898998;
              $stylist_id=8;
-             $test_Client = new Client($client,$id,$phone,$stylist_id);
+             $test_Client = new Client($client,$id,$stylist_id);
              //Act
              $result = $test_Client->getId();
              //Assert
@@ -61,10 +58,8 @@
              //Arrange
              $client= "Lynda";
              $id = null;
-             $phone=898998;
              $stylist_id=8;
-
-             $test_Client = new Client($client,$id,$phone,$stylist_id);
+             $test_Client = new Client($client,$id,$stylist_id);
              //Act
              $test_Client->setId(1);
              //Assert
@@ -83,17 +78,29 @@
             $test_Stylist->save();
 
             $client= "Lynda";
-            $phone=898998;
+
             $stylist_id=$test_Stylist->getId();
-            $test_client = new Client($client,$id,$phone,$stylist_id);
+            $test_client = new Client($client,$id,$stylist_id);
 
             //Act
             $test_client ->save();
 
             $result = Client::getAll();
+
+
             //Assert
             $this->assertEquals($test_client, $result[0]);
         }
+
+
+
+
+
+
+
+
+
+
 
 }
 

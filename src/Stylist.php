@@ -68,7 +68,6 @@ class Stylist
                $found_stylist=$stylists;
 
            }
-
         }
        return $found_stylist;
 
@@ -80,12 +79,17 @@ class Stylist
 
     }
 
-
-
     function delete(){
         $GLOBALS['DB']->exec("DELETE FROM stylist  WHERE id = {$this->getId()};");
         $GLOBALS['DB']->exec("DELETE FROM  client WHERE stylist_id = {$this->getId()};");
     }
+
+
+
+
+
+
+
 
 
 }
