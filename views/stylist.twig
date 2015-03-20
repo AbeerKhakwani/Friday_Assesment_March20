@@ -39,13 +39,19 @@
         </div>
 
            <div id="right">
+
+
            {% for client in clients %}
-           {{ client.getName }}
-           
+           <a href="/client/{{ client.getId }}">{{ client.getName }}</a>
+
 
            {% endfor %}
            </div>
 
+
+
+          <form action="/stylist/{{ stylist.getId() }}/edit" method="post">
+           <button type="submit">Edit Category Name</button>
 </div>
     </body>
 </html>
