@@ -8,6 +8,12 @@
     $DB = new PDO('pgsql:host=localhost;dbname=hair_salon_test');
     class ClientTest extends PHPUnit_Framework_TestCase
     {
+        protected function tearDown()
+        {
+            Stylist::deleteAll();
+            Client::deleteAll();
+
+        }
 
         function test_getClient()
         {
@@ -65,6 +71,30 @@
              $result = $test_Client->getId();
              $this->assertEquals(1, $result);
          }
+
+
+
+        function test_save(){
+            //Arrange
+            $name = "yyo";
+            $id = null;
+            $test_Stylist = new Stylist($name,$id);
+            //Act
+            $test_Stylist->save();
+
+            $client= "Lynda";
+            $phone=898998;
+            $stylist_id=$test_Stylist->getId();
+            $test_client = new Client($client,$id,$phone,$stylist_id);
+
+            //Act
+            $test_client ->save();
+
+            $result = Client::getAll();
+            //Assert
+            $this->assertEquals($test_client, $result[0]);
+        }
+
 }
 
 ?>

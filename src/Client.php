@@ -44,6 +44,34 @@ class Client
     {
         return $this->stylist_id;
     }
+
+    function save()
+    {
+        $statement = $GLOBALS['DB']->query("INSERT INTO client (client, stylist_id, phone) VALUES ('{$this->getClient()}', {$this->getStylistId()}, {$this->getPhone()}) RETURNING id;");
+        $result    = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->setId($result['id']);
+    }
+
+    static function getAll()
+    {
+        $result_Clients = $GLOBALS['DB']->query("SELECT * FROM client;");
+        $Clients  = array();
+        foreach ($result_Clients as $Client) {
+            $id         = $Client['id'];
+            $client     = $Client['client'];
+            $phone    = $Client['phone'];
+            $Stylist_id = $Client['stylist_id'];
+            $new_Clients   = new Client( $client,$id, $phone, $Stylist_id);
+            array_push($Clients, $new_Clients);
+        }
+        return $Clients;
+    }
+
+
+    static function deleteAll()
+     {
+         $GLOBALS['DB']->exec("DELETE FROM client *;");
+     }
 }
 
 
